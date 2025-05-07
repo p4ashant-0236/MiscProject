@@ -616,7 +616,7 @@ GameObject:
   - component: {fileID: 1566167245}
   - component: {fileID: 1566167244}
   m_Layer: 0
-  m_Name: CardManager
+  m_Name: CardBoardManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -635,7 +635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardDataSO: {fileID: 11400000, guid: 03e4eac142dfbb747b37e03a90c6ec01, type: 2}
-  cardPrefab: {fileID: 8053781233238528651, guid: 767942b10a16a744ebf23e68904cb01a, type: 3}
+  cardPrefab: {fileID: 1327232607352125457, guid: 767942b10a16a744ebf23e68904cb01a, type: 3}
   cardBoardParent: {fileID: 259161109}
 --- !u!4 &1566167245
 Transform:

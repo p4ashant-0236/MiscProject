@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,10 +7,20 @@ using UnityEngine.UI;
 public class CardManager : MonoBehaviour
 {
     [SerializeField] private CardDataSO cardDataSO;
-    [SerializeField] private Button cardPrefab;
+    [SerializeField] private Card cardPrefab;
     [SerializeField] private Transform cardBoardParent;
 
     private List<CardData> cardBoard;
+
+    private void OnEnable()
+    {
+        EventManager.AddListener(EventID.Event_CardSelected, OnCardSelected);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.RemoveListener(EventID.Event_CardSelected, OnCardSelected);
+    }
 
     internal void InitializeCardBoard()
     {
@@ -52,9 +63,8 @@ public class CardManager : MonoBehaviour
 
         for (int i = 0; i < cardBoard.Count; i++)
         {
-            Button cardButton = Instantiate(cardPrefab, cardBoardParent);
-            Card card = cardButton.GetComponent<Card>();
-
+            Card card = Instantiate(cardPrefab.gameObject, cardBoardParent).GetComponent<Card>();
+            
             if (card != null)
             {
                 card.Initialize(cardBoard[i], cardDataSO.cardBackSideSprite);
@@ -66,4 +76,36 @@ public class CardManager : MonoBehaviour
         }
     }
 
+    private Card firstSelectedCard;
+    private Card secondSelectedCard;
+
+    private void OnCardSelected(object arg)
+    {
+        Card data = (Card)arg;
+        if(firstSelectedCard == null)
+        {
+            firstSelectedCard = data;
+            return;
+        }
+
+        secondSelectedCard = data;
+        CheckForMatch();
+    }
+
+    private void CheckForMatch()
+    {
+        if(firstSelectedCard.cardData.Id == secondSelectedCard.cardData.Id)
+        {
+            //Match
+            Debug.Log("Match");
+        }
+        else
+        {
+            firstSelectedCard.FlipCard(CardFlipType.Back);
+            secondSelectedCard.FlipCard(CardFlipType.Back);
+        }
+
+        firstSelectedCard = null;
+        secondSelectedCard = null;
+    }
 }
