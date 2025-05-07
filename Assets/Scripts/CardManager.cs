@@ -110,8 +110,8 @@ public class CardManager : MonoBehaviour
         }
         else
         {
-            firstSelectedCard.FlipCard(CardFlipType.Back);
-            secondSelectedCard.FlipCard(CardFlipType.Back);
+            firstSelectedCard.FlipCard(CardFlipType.Back, 0.35f);
+            secondSelectedCard.FlipCard(CardFlipType.Back, 0.35f);
 
             EventManager.TriggerEvent(EventID.Event_OnMismatch);
         }
