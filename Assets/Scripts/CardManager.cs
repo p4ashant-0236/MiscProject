@@ -9,9 +9,9 @@ public class CardManager : MonoBehaviour
     [SerializeField] private CardDataSO cardDataSO;
     [SerializeField] private Card cardPrefab;
     [SerializeField] private Transform cardBoardParent;
-    [SerializeField] private ComboSystemManager comboSystemManager;
 
-    private List<CardData> cardBoard;
+    private List<CardData> cardBoard = new List<CardData>();
+    private List<Card> cardBoardItems = new List<Card>();
 
     private void OnEnable()
     {
@@ -25,7 +25,7 @@ public class CardManager : MonoBehaviour
 
     internal void InitializeCardBoard()
     {
-        cardBoard = new List<CardData>();
+        cardBoard.Clear();
 
         int totalCardsNeeded = 12;
 
@@ -42,6 +42,7 @@ public class CardManager : MonoBehaviour
         ShuffleCardBoard();
         SpawnCardsOnBoard();
     }
+
 
     internal void ShuffleCardBoard()
     {
@@ -62,10 +63,12 @@ public class CardManager : MonoBehaviour
             Destroy(child.gameObject); // Clean up old cards if any
         }
 
+        cardBoardItems.Clear();
+
         for (int i = 0; i < cardBoard.Count; i++)
         {
             Card card = Instantiate(cardPrefab.gameObject, cardBoardParent).GetComponent<Card>();
-
+            cardBoardItems.Add(card);
             if (card != null)
             {
                 card.Initialize(cardBoard[i], cardDataSO.cardBackSideSprite);
@@ -99,6 +102,9 @@ public class CardManager : MonoBehaviour
         {
             //Match
             Debug.Log("Match");
+            firstSelectedCard.MarkDeactive();
+            secondSelectedCard.MarkDeactive();
+
             EventManager.TriggerEvent(EventID.Event_OnMatch);
         }
         else
@@ -109,7 +115,19 @@ public class CardManager : MonoBehaviour
             EventManager.TriggerEvent(EventID.Event_OnMismatch);
         }
 
+
         firstSelectedCard = null;
         secondSelectedCard = null;
+    }
+
+    internal void ResetSelection()
+    {
+        firstSelectedCard = null;
+        secondSelectedCard = null;
+    }
+
+    internal List<Card> GetAllCards()
+    {
+        return cardBoardItems;
     }
 }

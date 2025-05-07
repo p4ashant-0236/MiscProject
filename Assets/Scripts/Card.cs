@@ -18,6 +18,8 @@ public class Card : MonoBehaviour
     [SerializeField] private Image cardImage;
     private bool _isFront;
 
+    internal bool isActive;
+
     private void OnEnable()
     {
         EventManager.AddListener(EventID.Reset_AllCard, OnResetCard);
@@ -25,7 +27,8 @@ public class Card : MonoBehaviour
 
     private void OnResetCard(object arg)
     {
-        FlipCard(CardFlipType.Back);
+        if(isActive)
+            FlipCard(CardFlipType.Back);
     }
 
     private void OnDisable()
@@ -39,18 +42,27 @@ public class Card : MonoBehaviour
         _cardBackSideSprite = cardBackSideSprite;
         cardImage.sprite = cardBackSideSprite;
         _isFront = false;
+        isActive = true;
+    }
+
+    internal void MarkDeactive()
+    {
+        FlipCard(CardFlipType.Front);
+        isActive = false;
     }
 
     public void OnClick_Card()
     {
-        FlipCard(CardFlipType.Front, ()=> {
-            EventManager.TriggerEvent(EventID.Event_CardSelected, this);
-        });
+        if(isActive)
+            FlipCard(CardFlipType.Front, ()=> {
+                EventManager.TriggerEvent(EventID.Event_CardSelected, this);
+            });
     }
 
     internal void FlipCard(CardFlipType cardFlipType, Action onCompleteCallback = default)
     {
-        StartCoroutine(FlipCardRoutine(cardFlipType, onCompleteCallback));
+        if(isActive)
+            StartCoroutine(FlipCardRoutine(cardFlipType, onCompleteCallback));
     }
 
     private IEnumerator FlipCardRoutine(CardFlipType cardFlipType, Action onCompleteCallback, bool waitForAnimation = true)
