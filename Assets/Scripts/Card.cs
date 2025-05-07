@@ -77,9 +77,10 @@ public class Card : MonoBehaviour
     private IEnumerator FlipCardCore(Action onSwapCallback, Action onCompleteCallback = default, bool waitForAnimation = true)
     {
         float flipDuration = 0.2f;
-        Vector3 originalScale = cardImage.transform.localScale;
-        Vector3 originalPosition = cardImage.transform.position;
-        Quaternion originalRotation = cardImage.transform.localRotation; // Store local rotation
+        Vector3 originalScale = Vector3.one;
+        Quaternion originalRotation = Quaternion.identity;
+
+        LeanTween.cancel(cardImage.gameObject);
 
         // Step 1: Scale Up Slightly & Move Up
         LeanTween.scale(cardImage.gameObject, originalScale * 1.2f, flipDuration / 3)

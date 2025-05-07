@@ -102,5 +102,7 @@ public static class EventManager
 public enum EventID
 {
     Event_CardSelected,
-    Reset_AllCard
+    Reset_AllCard,
+    Event_OnMatch,
+    Event_OnMismatch
 }

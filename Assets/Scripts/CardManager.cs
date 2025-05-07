@@ -9,6 +9,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] private CardDataSO cardDataSO;
     [SerializeField] private Card cardPrefab;
     [SerializeField] private Transform cardBoardParent;
+    [SerializeField] private ComboSystemManager comboSystemManager;
 
     private List<CardData> cardBoard;
 
@@ -64,7 +65,7 @@ public class CardManager : MonoBehaviour
         for (int i = 0; i < cardBoard.Count; i++)
         {
             Card card = Instantiate(cardPrefab.gameObject, cardBoardParent).GetComponent<Card>();
-            
+
             if (card != null)
             {
                 card.Initialize(cardBoard[i], cardDataSO.cardBackSideSprite);
@@ -82,7 +83,7 @@ public class CardManager : MonoBehaviour
     private void OnCardSelected(object arg)
     {
         Card data = (Card)arg;
-        if(firstSelectedCard == null)
+        if (firstSelectedCard == null)
         {
             firstSelectedCard = data;
             return;
@@ -94,15 +95,18 @@ public class CardManager : MonoBehaviour
 
     private void CheckForMatch()
     {
-        if(firstSelectedCard.cardData.Id == secondSelectedCard.cardData.Id)
+        if (firstSelectedCard.cardData.Id == secondSelectedCard.cardData.Id)
         {
             //Match
             Debug.Log("Match");
+            EventManager.TriggerEvent(EventID.Event_OnMatch);
         }
         else
         {
             firstSelectedCard.FlipCard(CardFlipType.Back);
             secondSelectedCard.FlipCard(CardFlipType.Back);
+
+            EventManager.TriggerEvent(EventID.Event_OnMismatch);
         }
 
         firstSelectedCard = null;
