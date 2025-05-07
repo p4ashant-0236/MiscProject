@@ -106,6 +106,7 @@ public class CardManager : MonoBehaviour
             secondSelectedCard.MarkDeactive();
 
             EventManager.TriggerEvent(EventID.Event_OnMatch);
+            ScoreController.AddMatchScore();
         }
         else
         {
@@ -115,7 +116,7 @@ public class CardManager : MonoBehaviour
             EventManager.TriggerEvent(EventID.Event_OnMismatch);
         }
 
-
+        ScoreController.AddTurn();
         firstSelectedCard = null;
         secondSelectedCard = null;
     }

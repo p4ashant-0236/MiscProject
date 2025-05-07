@@ -2,7 +2,13 @@ using UnityEngine;
 
 public class ComboSystemManager : MonoBehaviour
 {
+    public static ComboSystemManager Instance;
     private int _comboCount = 0;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void OnEnable()
     {

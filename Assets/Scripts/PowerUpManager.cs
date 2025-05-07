@@ -23,7 +23,7 @@ public class PowerUpManager : MonoBehaviour
 
     private void Start()
     {
-        AddPowerUp(new ShowTwoPairsPowerUp());
+        AddPowerUp(new SelectTwoPowerUp());
         AddPowerUp(new RevealAllCardsPowerUp());
     }
 

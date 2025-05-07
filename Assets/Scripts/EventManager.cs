@@ -104,5 +104,9 @@ public enum EventID
     Event_CardSelected,
     Reset_AllCard,
     Event_OnMatch,
-    Event_OnMismatch
+    Event_OnMismatch,
+    Event_UpdateScore,
+    Event_UpdateTurn,
+    Event_PowerUp_TwoCard,
+    Event_PowerUp_RevealAll
 }

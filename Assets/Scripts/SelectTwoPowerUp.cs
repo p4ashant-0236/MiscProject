@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class ShowTwoPairsPowerUp : BasePowerUp
+public class SelectTwoPowerUp : BasePowerUp
 {
-    public ShowTwoPairsPowerUp() : base(PowerUpType.ShowTwoCard, 1) { }
+    public SelectTwoPowerUp() : base(PowerUpType.ShowTwoCard, 1) {
+        EventManager.TriggerEvent(EventID.Event_PowerUp_TwoCard, UsesRemaining);
+    }
 
     protected override void Execute(CardManager cardManager)
     {
+        EventManager.TriggerEvent(EventID.Event_PowerUp_TwoCard, UsesRemaining);
         var cards = cardManager.GetAllCards();
 
         for (int i = 0; i < cards.Count; i++)
@@ -21,8 +24,8 @@ public class ShowTwoPairsPowerUp : BasePowerUp
 
                 if (cards[i].cardData.Id == cards[j].cardData.Id)
                 {
-                    cards[i].FlipCard(CardFlipType.Front);
-                    cards[j].FlipCard(CardFlipType.Front);
+                    cards[i].MarkDeactive();
+                    cards[j].MarkDeactive();
 
                     cardManager.ResetSelection();
                     return;
