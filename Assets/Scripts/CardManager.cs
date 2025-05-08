@@ -108,11 +108,13 @@ public class CardManager : MonoBehaviour
             AudioManager.Instance?.PlaySound(AudioType.Match);
             EventManager.TriggerEvent(EventID.Event_OnMatch);
             ScoreController.AddMatchScore();
+
+            CheckForGameWin();
         }
         else
         {
-            firstSelectedCard.FlipCard(CardFlipType.Back, 0.35f);
-            secondSelectedCard.FlipCard(CardFlipType.Back, 0.35f);
+            firstSelectedCard.FlipCard(CardFlipType.Back, 0.3f);
+            secondSelectedCard.FlipCard(CardFlipType.Back, 0.3f);
 
             AudioManager.Instance?.PlaySound(AudioType.Mismatch);
             EventManager.TriggerEvent(EventID.Event_OnMismatch);
@@ -121,6 +123,17 @@ public class CardManager : MonoBehaviour
         ScoreController.AddTurn();
         firstSelectedCard = null;
         secondSelectedCard = null;
+    }
+
+    private void CheckForGameWin()
+    {
+        var item = cardBoardItems.Find(x => x.isActive == true);
+        if (item == null)
+        {
+            Debug.Log("Game Completes");
+            EventManager.TriggerEvent(EventID.Event_GameWin);
+            AudioManager.Instance?.PlaySound(AudioType.GameComplete);
+        }
     }
 
     internal void ResetSelection()

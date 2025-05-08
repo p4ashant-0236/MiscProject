@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance { get; private set; }
 
     [SerializeField] private AudioDataSO soundData;
+    [SerializeField] private AudioSource musicSource;
     [SerializeField] private List<AudioSource> sfxPool = new List<AudioSource>();
 
     private void Awake()
@@ -19,6 +20,15 @@ public class AudioManager : MonoBehaviour
     {
         AudioClip clip = soundData.GetClip(type);
         if (clip == null) return;
+
+        if (type == AudioType.BackgroundMusic)
+        {
+            musicSource.clip = clip;
+            musicSource.loop = true;
+            musicSource.Play();
+
+            return;
+        }
 
         foreach (var src in sfxPool)
         {

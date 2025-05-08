@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        AudioManager.Instance?.PlaySound(AudioType.BackgroundMusic);
+
         dynamicGridResizer.Initialize(Mathf.Min(boardSize.x, boardSize.y), Mathf.Min(boardSize.x, boardSize.y), Mathf.Max(boardSize.x, boardSize.y));
         dynamicGridResizer.UpdateBoard();
         cardManager.InitializeCardBoard(boardSize);

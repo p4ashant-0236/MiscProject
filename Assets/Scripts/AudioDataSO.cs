@@ -43,5 +43,6 @@ public enum AudioType
     Flip,
     Match,
     Mismatch,
-    GameComplete
+    GameComplete,
+    BackgroundMusic
 }
