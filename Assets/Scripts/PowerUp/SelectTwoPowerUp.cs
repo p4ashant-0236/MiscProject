@@ -5,11 +5,13 @@ public class SelectTwoPowerUp : BasePowerUp
 {
     public SelectTwoPowerUp(int uses) : base(PowerUpType.ShowTwoCard, uses) {
         EventManager.TriggerEvent(EventID.Event_PowerUp_TwoCard, UsesRemaining);
+        SaveSystem.SaveSelectTwoPowerUps(UsesRemaining);
     }
 
     protected override void Execute(CardManager cardManager)
     {
         EventManager.TriggerEvent(EventID.Event_PowerUp_TwoCard, UsesRemaining);
+        SaveSystem.SaveSelectTwoPowerUps(UsesRemaining);
         var cards = cardManager.GetAllCards();
 
         for (int i = 0; i < cards.Count; i++)

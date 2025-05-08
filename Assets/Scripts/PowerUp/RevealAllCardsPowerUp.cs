@@ -5,11 +5,13 @@ public class RevealAllCardsPowerUp : BasePowerUp
 {
     public RevealAllCardsPowerUp(int uses) : base(PowerUpType.RevealAll, uses) {
         EventManager.TriggerEvent(EventID.Event_PowerUp_RevealAll, UsesRemaining);
+        SaveSystem.SaveRevealAllPowerUps(UsesRemaining);
     }
 
     protected override void Execute(CardManager cardManager)
     {
         EventManager.TriggerEvent(EventID.Event_PowerUp_RevealAll, UsesRemaining);
+        SaveSystem.SaveRevealAllPowerUps(UsesRemaining);
         cardManager.StartCoroutine(RevealAllTemporary(cardManager));
     }
 

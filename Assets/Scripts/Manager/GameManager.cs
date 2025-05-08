@@ -10,6 +10,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PowerUpManager powerUpManager;
     [SerializeField] private DynamicGridResizer dynamicGridResizer;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
         uiManager.PrepareDefaultState(this);
@@ -29,10 +34,23 @@ public class GameManager : MonoBehaviour
 
     internal void StartNewGame(int row, int column)
     {
-        dynamicGridResizer.Initialize(Mathf.Min(row, column), Mathf.Min(row, column), Mathf.Max(row, column));
+        dynamicGridResizer.Initialize(Mathf.Min(row, column), Mathf.Max(row, column));
         dynamicGridResizer.UpdateBoard();
         cardManager.InitializeCardBoard(row, column);
         powerUpManager.PrepareDefaultState();
+    }
+
+    internal void LoadOldGame()
+    {
+        GameSaveData gameSaveData = SaveSystem.LoadSavedData();
+
+        dynamicGridResizer.Initialize(gameSaveData.data.row, gameSaveData.data.column);
+        dynamicGridResizer.UpdateBoard();
+        cardManager.LoadCardBoard(gameSaveData.data);
+        powerUpManager.PrepareLoadState(gameSaveData.data.selectTwoPowerUp, gameSaveData.data.revealAllPowerUp);
+        ScoreController.LoadOldData(gameSaveData.data);
+
+        Debug.Log("Loading Done");
     }
 
     internal void OnGameComplete(object args)

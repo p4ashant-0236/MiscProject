@@ -23,6 +23,43 @@ public class CardManager : MonoBehaviour
         EventManager.RemoveListener(EventID.Event_CardSelected, OnCardSelected);
     }
 
+    internal void LoadCardBoard(GameSaveResult gameSaveResult)
+    {
+        cardBoard.Clear();
+        cardBoardItems.Clear();
+
+        // Clear existing cards from the board
+        foreach (Transform child in cardBoardParent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Loop through saved cards
+        foreach (var savedCard in gameSaveResult.cardBoard)
+        {
+            cardBoard.Add(savedCard.cardData);
+
+            Card card = Instantiate(cardPrefab.gameObject, cardBoardParent).GetComponent<Card>();
+            cardBoardItems.Add(card);
+
+            if (card != null)
+            {
+                card.Initialize(savedCard.cardData, cardDataSO.cardBackSideSprite);
+
+                if (!savedCard.isActive)
+                {
+                    card.MarkDeactive();
+                }
+            }
+            else
+            {
+                Debug.LogError("Card component missing on prefab!");
+            }
+        }
+
+        Debug.Log("Board loaded from saved data.");
+    }
+
     internal void InitializeCardBoard(int row, int column)
     {
         cardBoard.Clear();
@@ -41,8 +78,11 @@ public class CardManager : MonoBehaviour
 
         ShuffleCardBoard();
         SpawnCardsOnBoard();
-    }
 
+        SaveSystem.ClearSave();
+        SaveSystem.MarkValidData();
+        SaveSystem.SaveCardBoard(row, column, cardBoardItems);
+    }
 
     internal void ShuffleCardBoard()
     {
@@ -110,6 +150,10 @@ public class CardManager : MonoBehaviour
             ScoreController.AddMatchScore();
 
             CheckForGameWin();
+
+            SaveSystem.MarkCardDeactive(firstSelectedCard.cardData.Id);
+            SaveSystem.MarkCardDeactive(secondSelectedCard.cardData.Id);
+            
         }
         else
         {
@@ -125,6 +169,8 @@ public class CardManager : MonoBehaviour
         }
 
         ScoreController.AddTurn();
+        SaveSystem.SaveScoreAndTurn(ScoreController.CurrentScore, ScoreController.CurrentTurn);
+
         firstSelectedCard = null;
         secondSelectedCard = null;
     }

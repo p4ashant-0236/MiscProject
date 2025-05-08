@@ -28,6 +28,13 @@ public class PowerUpManager : MonoBehaviour
         AddPowerUp(new RevealAllCardsPowerUp(2));
     }
 
+    internal void PrepareLoadState(int selectTwoPowerUp, int revealAllPowerUp)
+    {
+        activePowerUps.Clear();
+        AddPowerUp(new SelectTwoPowerUp(selectTwoPowerUp));
+        AddPowerUp(new RevealAllCardsPowerUp(revealAllPowerUp));
+    }
+
     public void AddPowerUp(IPowerUp powerUp)
     {
         if (!activePowerUps.ContainsKey(powerUp.powerUpType))

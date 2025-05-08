@@ -34,4 +34,12 @@ public class ScoreController
         EventManager.TriggerEvent(EventID.Event_UpdateScore, currentScore);
         EventManager.TriggerEvent(EventID.Event_UpdateTurn, currentTurn);
     }
+
+    public static void LoadOldData(GameSaveResult data)
+    {
+        currentScore = data.score;
+        currentTurn = data.turns;
+        EventManager.TriggerEvent(EventID.Event_UpdateScore, currentScore);
+        EventManager.TriggerEvent(EventID.Event_UpdateTurn, currentTurn);
+    }
 }

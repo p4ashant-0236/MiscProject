@@ -22,10 +22,10 @@ public class DynamicGridResizer : MonoBehaviour
         UpdateBoard();
     }
 
-    internal void Initialize(int constraint, int row, int column)
+    internal void Initialize(int row, int column)
     {
         gridLayout.spacing = spacing;
-        gridLayout.constraintCount = constraint;
+        gridLayout.constraintCount = Mathf.Min(row, column);
         rows = row;
         columns = column;
     }

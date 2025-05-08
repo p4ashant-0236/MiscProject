@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
         gameplayScreenUI.gameObject.SetActive(false);
         homeScreenUI.gameObject.SetActive(false);
         completeScreenUI.ShowGameCompleteScreen(score, turn);
+        SaveSystem.ClearSave();
     }
 
     internal void PrepareDefaultState(GameManager gameManager)
@@ -32,6 +33,11 @@ public class UIManager : MonoBehaviour
     {
         gameplayScreenUI.gameObject.SetActive(true);
         gameManager.StartNewGame(row, column);
+    }
+
+    internal void LoadOldGame() { 
+        gameplayScreenUI.gameObject.SetActive(true);
+        gameManager.LoadOldGame();
     }
 
     internal void ShowHomeScreen()

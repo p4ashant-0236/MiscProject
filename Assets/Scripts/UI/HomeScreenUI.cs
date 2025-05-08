@@ -27,6 +27,10 @@ public class HomeScreenUI : MonoBehaviour
         button_3x4.gameObject.SetActive(false);
         button_4x5.gameObject.SetActive(false);
         button_5x6.gameObject.SetActive(false);
+
+        var savedata = SaveSystem.LoadSavedData();
+        Debug.Log(savedata.canResume);
+        loadGameButton.interactable = savedata.canResume;
     }
 
     public void OnClick_StartNewGame()
@@ -37,6 +41,12 @@ public class HomeScreenUI : MonoBehaviour
         button_3x4.gameObject.SetActive(true);
         button_4x5.gameObject.SetActive(true);
         button_5x6.gameObject.SetActive(true);
+    }
+
+    public void OnClick_LoadGame()
+    {
+        uIManager.LoadOldGame();
+        this.gameObject.SetActive(false);
     }
 
     public void OnClick_3x4()
