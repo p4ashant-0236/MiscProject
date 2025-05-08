@@ -15,6 +15,12 @@ public class GameplayScreenUI : MonoBehaviour
     [SerializeField] private Button revealedAllCardButton;
     [SerializeField] private TMP_Text revealedAllCardCount;
 
+    private UIManager uIManager;
+    internal void PrepareDefaultState(UIManager uIManager)
+    {
+        this.uIManager = uIManager;
+    }
+
     private void OnEnable()
     {
         EventManager.AddListener(EventID.Event_UpdateScore, OnScoreUpdate);

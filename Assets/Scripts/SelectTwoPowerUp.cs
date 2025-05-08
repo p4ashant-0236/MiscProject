@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class SelectTwoPowerUp : BasePowerUp
 {
-    public SelectTwoPowerUp() : base(PowerUpType.ShowTwoCard, 1) {
+    public SelectTwoPowerUp(int uses) : base(PowerUpType.ShowTwoCard, uses) {
         EventManager.TriggerEvent(EventID.Event_PowerUp_TwoCard, UsesRemaining);
     }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class RevealAllCardsPowerUp : BasePowerUp
 {
-    public RevealAllCardsPowerUp() : base(PowerUpType.RevealAll, 2) {
+    public RevealAllCardsPowerUp(int uses) : base(PowerUpType.RevealAll, uses) {
         EventManager.TriggerEvent(EventID.Event_PowerUp_RevealAll, UsesRemaining);
     }
 

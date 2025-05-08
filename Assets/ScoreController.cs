@@ -9,6 +9,7 @@ public class ScoreController
     private static int currentTurn = 0;
 
     public static int CurrentScore => currentScore;
+    public static int CurrentTurn => currentTurn;
 
     public static void AddTurn()
     {

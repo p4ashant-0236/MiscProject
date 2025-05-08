@@ -21,10 +21,11 @@ public class PowerUpManager : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
+    internal void PrepareDefaultState()
     {
-        AddPowerUp(new SelectTwoPowerUp());
-        AddPowerUp(new RevealAllCardsPowerUp());
+        activePowerUps.Clear();
+        AddPowerUp(new SelectTwoPowerUp(1));
+        AddPowerUp(new RevealAllCardsPowerUp(2));
     }
 
     public void AddPowerUp(IPowerUp powerUp)

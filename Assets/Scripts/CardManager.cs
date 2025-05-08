@@ -23,11 +23,11 @@ public class CardManager : MonoBehaviour
         EventManager.RemoveListener(EventID.Event_CardSelected, OnCardSelected);
     }
 
-    internal void InitializeCardBoard(Vector2Int boardSize)
+    internal void InitializeCardBoard(int row, int column)
     {
         cardBoard.Clear();
 
-        int totalCardsNeeded = boardSize.x * boardSize.y;
+        int totalCardsNeeded = row * column;
 
         int cardCounter = 0;
         // Add pairs of cards ensuring different suits
