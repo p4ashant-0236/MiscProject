@@ -344,8 +344,8 @@ GameObject:
   m_Component:
   - component: {fileID: 259161109}
   - component: {fileID: 259161111}
-  - component: {fileID: 259161110}
-  - component: {fileID: 259161112}
+  - component: {fileID: 259161115}
+  - component: {fileID: 259161116}
   m_Layer: 5
   m_Name: CardGrid
   m_TagString: Untagged
@@ -360,33 +360,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 259161108}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1679551683}
+  m_Father: {fileID: 374895591}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 800, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &259161110
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 259161108}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 2
 --- !u!114 &259161111
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,14 +390,22 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 1
+  m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 150, y: 150}
   m_Spacing: {x: 20, y: 20}
-  m_Constraint: 1
+  m_Constraint: 2
   m_ConstraintCount: 4
---- !u!114 &259161112
+--- !u!222 &259161115
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 259161108}
+  m_CullTransparentMesh: 1
+--- !u!114 &259161116
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -420,12 +414,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 259161108}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99a997156cc37604fbc5c636183ae09d, type: 3}
+  m_Script: {fileID: 11500000, guid: 3aef0a1170dd518499d8594f9db2492c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grid: {fileID: 259161111}
-  cardPrefab: {fileID: 8053781233238528649, guid: 767942b10a16a744ebf23e68904cb01a, type: 3}
-  cardControllers: []
+  spacing: {x: 10, y: 10}
+  padding: {x: 20, y: 20}
+  gridLayout: {fileID: 259161111}
+  rectTransform: {fileID: 374895591}
 --- !u!1 &333005086
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,6 +524,52 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &374895590
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 374895591}
+  - component: {fileID: 374895593}
+  m_Layer: 5
+  m_Name: Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &374895591
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374895590}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 259161109}
+  m_Father: {fileID: 1679551683}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -100}
+  m_SizeDelta: {x: 900, y: 900}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &374895593
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374895590}
+  m_CullTransparentMesh: 1
 --- !u!1 &377731681
 GameObject:
   m_ObjectHideFlags: 0
@@ -2056,7 +2097,7 @@ GameObject:
   - component: {fileID: 1566167245}
   - component: {fileID: 1566167244}
   m_Layer: 0
-  m_Name: CardBoardManager
+  m_Name: CardManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2243,7 +2284,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 259161109}
+  - {fileID: 374895591}
   - {fileID: 377731682}
   - {fileID: 1028786310}
   - {fileID: 1485278079}
@@ -2702,6 +2743,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardManager: {fileID: 1566167244}
+  dynamicGridResizer: {fileID: 259161116}
+  boardSize: {x: 5, y: 4}
 --- !u!4 &1927408999
 Transform:
   m_ObjectHideFlags: 0

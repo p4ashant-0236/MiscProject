@@ -23,11 +23,11 @@ public class CardManager : MonoBehaviour
         EventManager.RemoveListener(EventID.Event_CardSelected, OnCardSelected);
     }
 
-    internal void InitializeCardBoard()
+    internal void InitializeCardBoard(Vector2Int boardSize)
     {
         cardBoard.Clear();
 
-        int totalCardsNeeded = 12;
+        int totalCardsNeeded = boardSize.x * boardSize.y;
 
         int cardCounter = 0;
         // Add pairs of cards ensuring different suits
@@ -105,6 +105,7 @@ public class CardManager : MonoBehaviour
             firstSelectedCard.MarkDeactive();
             secondSelectedCard.MarkDeactive();
 
+            AudioManager.Instance?.PlaySound(AudioType.Match);
             EventManager.TriggerEvent(EventID.Event_OnMatch);
             ScoreController.AddMatchScore();
         }
@@ -113,6 +114,7 @@ public class CardManager : MonoBehaviour
             firstSelectedCard.FlipCard(CardFlipType.Back, 0.35f);
             secondSelectedCard.FlipCard(CardFlipType.Back, 0.35f);
 
+            AudioManager.Instance?.PlaySound(AudioType.Mismatch);
             EventManager.TriggerEvent(EventID.Event_OnMismatch);
         }
 

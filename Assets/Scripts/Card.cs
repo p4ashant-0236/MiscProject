@@ -67,6 +67,8 @@ public class Card : MonoBehaviour
             StartCoroutine(FlipCardRoutine(cardFlipType, onCompleteCallback, delay));
         else
             onCompleteCallback?.Invoke();
+
+        AudioManager.Instance?.PlaySound(AudioType.Flip);
     }
 
     internal void FlipCard(CardFlipType cardFlipType, Action onCompleteCallback = default)
@@ -75,6 +77,8 @@ public class Card : MonoBehaviour
             StartCoroutine(FlipCardRoutine(cardFlipType, onCompleteCallback));
         else
             onCompleteCallback?.Invoke();
+
+        AudioManager.Instance?.PlaySound(AudioType.Flip);
     }
 
     internal void BounceCard()

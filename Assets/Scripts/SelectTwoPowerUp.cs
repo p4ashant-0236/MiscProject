@@ -28,6 +28,7 @@ public class SelectTwoPowerUp : BasePowerUp
                     cards[j].MarkDeactive();
 
                     cardManager.ResetSelection();
+                    AudioManager.Instance?.PlaySound(AudioType.Match);
                     return;
                 }
             }
