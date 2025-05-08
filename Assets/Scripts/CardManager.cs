@@ -116,7 +116,11 @@ public class CardManager : MonoBehaviour
             firstSelectedCard.FlipCard(CardFlipType.Back, 0.3f);
             secondSelectedCard.FlipCard(CardFlipType.Back, 0.3f);
 
-            AudioManager.Instance?.PlaySound(AudioType.Mismatch);
+            LeanTween.delayedCall(0.2f, () =>
+            {
+                AudioManager.Instance?.PlaySound(AudioType.Mismatch);
+            });
+            
             EventManager.TriggerEvent(EventID.Event_OnMismatch);
         }
 
