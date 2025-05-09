@@ -5,68 +5,71 @@ using System.Collections.Generic;
 [Serializable]
 public class SavedCardData
 {
-    public CardData cardData;
-    public bool isActive;
+    public CardData cardData; // The data related to the card (e.g., ID, type, etc.)
+    public bool isActive;     // Whether the card is currently active in the game
 }
 
 [Serializable]
 public class GameSaveResult
 {
-    public int row;
-    public int column;
-    public int score;
-    public int turns;
-    public int selectTwoPowerUp;
-    public int revealAllPowerUp;
-    public List<SavedCardData> cardBoard = new List<SavedCardData>();
+    public int row;                          // Number of rows in the game board
+    public int column;                       // Number of columns in the game board
+    public int score;                        // Player's current score
+    public int turns;                        // Number of turns taken so far
+    public int selectTwoPowerUp;             // Count of "Select Two" power-ups
+    public int revealAllPowerUp;             // Count of "Reveal All" power-ups
+    public List<SavedCardData> cardBoard = new List<SavedCardData>(); // Current card board state
 }
 
 [Serializable]
 public class GameSaveData
 {
-    public bool canResume;
-    public GameSaveResult data;
+    public bool canResume;                   // Whether the game can be resumed
+    public GameSaveResult data;              // Actual saved game result data
 }
 
 public class SaveSystem : MonoBehaviour
 {
-    private const string SaveKey = "GameSaveData";
-    private static SaveSystem Get;
-    private static GameSaveData cachedData;
-    private GameSaveData fgcachedData;
+    private const string SaveKey = "GameSaveData";   // Key for saving data in PlayerPrefs
+    private static SaveSystem Get;                  // Singleton-like reference for this component
+    private static GameSaveData cachedData;         // Static cache for quick access
+    private GameSaveData fgcachedData;              // Instance-level mirror of cache for debug/inspection
 
-    // --------------- Public Save Methods ----------------
-
+    // Called when the script instance is being loaded
     private void Awake()
     {
         Get = this;
     }
 
+    // Saves only score and turns to cache and PlayerPrefs
     public static void SaveScoreAndTurn(int score, int turns)
     {
         EnsureCacheLoaded();
         cachedData.data.score = score;
         cachedData.data.turns = turns;
         Get.fgcachedData = cachedData;
-        Flush();
+        Save();
     }
 
+    // Saves count of "Select Two" power-ups
     public static void SaveSelectTwoPowerUps(int count)
     {
         EnsureCacheLoaded();
         cachedData.data.selectTwoPowerUp = count;
         Get.fgcachedData = cachedData;
-        Flush();
+        Save();
     }
 
+    // Saves count of "Reveal All" power-ups
     public static void SaveRevealAllPowerUps(int count)
     {
         EnsureCacheLoaded();
         cachedData.data.revealAllPowerUp = count;
         Get.fgcachedData = cachedData;
-        Flush();
+        Save();
     }
 
+    // Saves the current card board layout and state
     public static void SaveCardBoard(int row, int column, List<Card> cardBoardItems)
     {
         EnsureCacheLoaded();
@@ -85,9 +88,10 @@ public class SaveSystem : MonoBehaviour
             });
         }
         Get.fgcachedData = cachedData;
-        Flush();
+        Save();
     }
 
+    // Marks a specific card (by ID) as inactive in the save data
     public static void MarkCardDeactive(int cardId)
     {
         EnsureCacheLoaded();
@@ -108,21 +112,19 @@ public class SaveSystem : MonoBehaviour
         }
 
         Get.fgcachedData = cachedData;
-        Flush();
+        Save();
     }
 
+    // Marks the current save as valid for resuming
     public static void MarkValidData()
     {
         EnsureCacheLoaded();
         cachedData.canResume = true;
         Get.fgcachedData = cachedData;
-        //  Debug.Log(GameManager.Instance);
-        //  Debug.Log(GameManager.Instance.gameSaveData1);
-        //  GameManager.Instance.gameSaveData1 = cachedData;
-
-        Flush();
+        Save();
     }
 
+    // Loads saved data from PlayerPrefs (if available)
     public static GameSaveData LoadSavedData()
     {
         EnsureCacheLoaded();
@@ -130,6 +132,7 @@ public class SaveSystem : MonoBehaviour
         return cachedData;
     }
 
+    // Returns whether valid save data is available to resume
     public static bool HasSaveData()
     {
         EnsureCacheLoaded();
@@ -137,6 +140,7 @@ public class SaveSystem : MonoBehaviour
         return cachedData.canResume;
     }
 
+    // Clears the save data from PlayerPrefs and cache
     public static void ClearSave()
     {
         cachedData = new GameSaveData { canResume = false, data = new GameSaveResult() };
@@ -144,7 +148,8 @@ public class SaveSystem : MonoBehaviour
         Debug.Log("Save data cleared.");
     }
 
-    public static void Flush()
+    // Serializes and stores the current cachedData to PlayerPrefs
+    public static void Save()
     {
         if (cachedData == null)
         {
@@ -158,8 +163,7 @@ public class SaveSystem : MonoBehaviour
         Debug.Log("Game data flushed to PlayerPrefs.");
     }
 
-    // ----------------- Private Helpers ------------------
-
+    // Ensures the cache is loaded from PlayerPrefs or initializes a new one
     private static void EnsureCacheLoaded()
     {
         if (cachedData != null) return;
@@ -182,5 +186,11 @@ public class SaveSystem : MonoBehaviour
 
         Get.fgcachedData = cachedData;
         Debug.Log("Game data cache loaded.");
+    }
+
+    // Automatically saves when the app is paused (e.g., home button or incoming call)
+    private void OnApplicationPause(bool pause)
+    {
+        Save();
     }
 }
