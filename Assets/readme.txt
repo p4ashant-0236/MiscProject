@@ -24,7 +24,7 @@ A feature-rich Unity-based card matching puzzle game designed to test memory, st
 - Two types of power-ups:
   - **Show Two Cards**: Temporarily reveals two unmatched cards.
   - **Reveal All Cards**: Briefly reveals the entire board.
-- Uses interfaces and abstract base classes (`IPowerUp`, `BasePowerUp`) for clean extensibility.
+- Uses abstract base classes (`BasePowerUp`) for clean extensibility.
 - Tracks remaining uses per power-up.
 
 ### 💥 Combo System

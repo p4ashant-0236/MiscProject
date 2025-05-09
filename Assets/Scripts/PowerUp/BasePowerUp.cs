@@ -1,4 +1,4 @@
-public abstract class BasePowerUp : IPowerUp
+public abstract class BasePowerUp
 {
     // Power-up type (e.g., ShowTwoCard, RevealAll)
     public PowerUpType powerUpType { get; protected set; }

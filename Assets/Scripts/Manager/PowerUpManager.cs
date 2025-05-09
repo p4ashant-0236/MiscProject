@@ -21,7 +21,7 @@ public class PowerUpManager : MonoBehaviour
     [SerializeField] private CardManager cardManager;
 
     // Stores currently available power-ups and their instances.
-    private Dictionary<PowerUpType, IPowerUp> activePowerUps = new Dictionary<PowerUpType, IPowerUp>();
+    private Dictionary<PowerUpType, BasePowerUp> activePowerUps = new Dictionary<PowerUpType, BasePowerUp>();
 
     private void Awake()
     {
@@ -52,7 +52,7 @@ public class PowerUpManager : MonoBehaviour
     /// <summary>
     /// Adds a new power-up to the active list if not already present.
     /// </summary>
-    public void AddPowerUp(IPowerUp powerUp)
+    public void AddPowerUp(BasePowerUp powerUp)
     {
         if (!activePowerUps.ContainsKey(powerUp.powerUpType))
         {
