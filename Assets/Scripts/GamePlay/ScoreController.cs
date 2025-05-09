@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class ScoreData
+{
+    public int score;
+    public int scoreGained;
+}
+
 public class ScoreController
 {
     // Base score for each successful match (removed magic number 10)
@@ -38,7 +44,7 @@ public class ScoreController
         int scoreToAdd = baseScore * multiplier;
         currentScore += scoreToAdd;
 
-        EventManager.TriggerEvent(EventID.Event_UpdateScore, currentScore);
+        EventManager.TriggerEvent(EventID.Event_UpdateScore, new ScoreData() {score = currentScore, scoreGained = scoreToAdd });
     }
 
     /// <summary>
@@ -49,7 +55,7 @@ public class ScoreController
         currentScore = 0;
         currentTurn = 0;
 
-        EventManager.TriggerEvent(EventID.Event_UpdateScore, currentScore);
+        EventManager.TriggerEvent(EventID.Event_UpdateScore, new ScoreData() { score = currentScore, scoreGained = 0 });
         EventManager.TriggerEvent(EventID.Event_UpdateTurn, currentTurn);
     }
 
@@ -62,7 +68,7 @@ public class ScoreController
         currentScore = data.score;
         currentTurn = data.turns;
 
-        EventManager.TriggerEvent(EventID.Event_UpdateScore, currentScore);
+        EventManager.TriggerEvent(EventID.Event_UpdateScore, new ScoreData() { score = currentScore, scoreGained = 0 });
         EventManager.TriggerEvent(EventID.Event_UpdateTurn, currentTurn);
     }
 }

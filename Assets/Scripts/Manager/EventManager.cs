@@ -109,5 +109,6 @@ public enum EventID
     Event_UpdateTurn,
     Event_PowerUp_TwoCard,
     Event_PowerUp_RevealAll,
-    Event_GameWin
+    Event_GameWin,
+    Event_Combo
 }

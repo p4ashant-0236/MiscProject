@@ -37,6 +37,7 @@ public class ComboSystemManager : MonoBehaviour
 
         if (_comboCount >= MIN_COMBO_TO_DISPLAY)
         {
+            EventManager.TriggerEvent(EventID.Event_Combo, _comboCount);
             Debug.Log($"Combo X{_comboCount}!");
         }
     }
